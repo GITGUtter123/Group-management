@@ -1,123 +1,35 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tab Grouping Manager</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-            background-color: #f4f4f9;
-        }
-        header {
-            padding: 10px 0;
-            background: #6200ea;
-            color: white;
-        }
-        .container {
-            margin: 20px auto;
-            max-width: 600px;
-        }
-        button {
-            margin: 10px;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            background-color: #6200ea;
-            color: white;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #3700b3;
-        }
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-        li {
-            margin: 5px 0;
-            padding: 10px;
-            background: white;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tab Organizer</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>Tab Grouping Manager</h1>
-    </header>
-    <div class="container">
-        <h2>Create and Manage Tab Groups</h2>
-        <button onclick="saveTabs()">Save Current Tabs to Group</button>
-        <button onclick="addURLToGroup()">Add URL to Group</button>
-        <button onclick="restoreGroup()">Restore Grouped Tabs</button>
+  <header>
+    <h1>Tab Organizer</h1>
+    <p>A simple way to organize and store your favorite links by groups.</p>
+  </header>
+  
+  <main>
+    <section>
+      <h2>Current Groups</h2>
+      <div id="groups-container"></div>
+    </section>
 
-        <h3>Saved Groups</h3>
-        <ul id="groups"></ul>
-    </div>
+    <section>
+      <h2>Add Link to Group</h2>
+      <input type="text" id="new-link-url" placeholder="Enter URL" required>
+      <input type="text" id="new-link-group" placeholder="Enter Group Name" required>
+      <button id="add-link">Add Link</button>
+    </section>
+  </main>
 
-    <script>
-        const savedGroups = JSON.parse(localStorage.getItem('tabGroups') || '{}');
-        const groupsContainer = document.getElementById('groups');
+  <footer>
+    <p>© 2025 Tab Organizer</p>
+  </footer>
 
-        function renderGroups() {
-            groupsContainer.innerHTML = '';
-            for (const groupName in savedGroups) {
-                const li = document.createElement('li');
-                li.innerText = `${groupName} (${savedGroups[groupName].length} tabs)`;
-                li.onclick = () => openTabs(savedGroups[groupName]);
-                groupsContainer.appendChild(li);
-            }
-        }
-
-        function saveTabs() {
-            const groupName = prompt('Enter a name for this group:');
-            if (!groupName) return;
-
-            chrome.tabs.query({ currentWindow: true }, (tabs) => {
-                savedGroups[groupName] = tabs.map(tab => tab.url);
-                localStorage.setItem('tabGroups', JSON.stringify(savedGroups));
-                renderGroups();
-            });
-        }
-
-        function addURLToGroup() {
-            const groupName = prompt('Enter the name of the group to add a URL to:');
-            if (!savedGroups[groupName]) {
-                alert('Group not found.');
-                return;
-            }
-
-            const url = prompt('Enter the URL to add to this group:');
-            if (!url) {
-                alert('No URL provided.');
-                return;
-            }
-
-            savedGroups[groupName].push(url);
-            localStorage.setItem('tabGroups', JSON.stringify(savedGroups));
-            renderGroups();
-        }
-
-        function restoreGroup() {
-            const groupName = prompt('Enter the group name to restore:');
-            if (!savedGroups[groupName]) {
-                alert('Group not found.');
-                return;
-            }
-            openTabs(savedGroups[groupName]);
-        }
-
-        function openTabs(urls) {
-            urls.forEach(url => window.open(url));
-        }
-
-        renderGroups();
-    </script>
+  <script src="script.js"></script>
 </body>
 </html>
