@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tab Organizer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Tab Organizer</h1>
+    <p>A simple way to organize and store your favorite links by groups.</p>
+  </header>
+  
+  <main>
+    <section>
+      <h2>Current Groups</h2>
+      <div id="groups-container"></div>
+    </section>
+
+    <section>
+      <h2>Add Link to Group</h2>
+      <input type="text" id="new-link-url" placeholder="Enter URL" required>
+      <input type="text" id="new-link-group" placeholder="Enter Group Name" required>
+      <button id="add-link">Add Link</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Tab Organizer</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
